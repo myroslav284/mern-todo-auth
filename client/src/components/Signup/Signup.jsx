@@ -1,8 +1,7 @@
-import React from "react";
 import { useForm } from "react-hook-form";
-import "./Login.scss";
+import "./Signup.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchLogin, selectIsAuth } from "../../redux/slices/auth";
+import { fetchSignup, selectIsAuth } from "../../redux/slices/auth";
 import { Link, Navigate } from "react-router-dom";
 const Login = () => {
   const dispatch = useDispatch();
@@ -15,7 +14,7 @@ const Login = () => {
   } = useForm();
 
   const onSubmit = async (values) => {
-    const data = await dispatch(fetchLogin(values));
+    const data = await dispatch(fetchSignup(values));
     if (!data.payload) {
       return alert("Authorization failed");
     }
@@ -34,7 +33,7 @@ const Login = () => {
 
   return (
     <div className="flex justify-center items-center min-h-screen">
-      <div className="w-full max-w-sm h-[400px]">
+      <div className="w-full max-w-sm h-[500px]">
         <div className="custom-shadow shadow-mb px-8 pt-6 pb-8 rounded-lg bg-slate-900 relative h-full overflow-hidden ">
           <div
             className="absolute w-full h-full bg-gradient-to-r from-transparent  -top-[50%] -left-[50%]
@@ -47,8 +46,30 @@ const Login = () => {
           <div className="absolute inset-1.5 bg-slate-900 rounded-lg z-10 p-5">
             <form onSubmit={handleSubmit(onSubmit)} className="text-center">
               <h1 className="relative text-blue-500  mx-auto max-w-fit text-3xl font-semibold mb-12 custom-text">
-                Login
+                Sign up
               </h1>
+              <div className="relative flex flex-col mb-12 inputBox w-full">
+                <input
+                  type="text"
+                  name=""
+                  id="fullName"
+                  required
+                  className="w-full relative bg-transparent border-none outline-none shadow-none text-gray-900 text-sm transition duration-500"
+                  {...register("fullName", {
+                    required: "please enter Username",
+                  })}
+                />
+                {errors.email && (
+                  <div className="text-red-500 text-xs absolute -bottom-5">
+                    {errors.email.message}
+                  </div>
+                )}
+
+                <span className="absolute left-0 py-2 px-0 text-gray-500 text-sm transition duration-500">
+                  Username
+                </span>
+                <i></i>
+              </div>
               <div className="relative flex flex-col mb-12 inputBox w-full">
                 <input
                   type="text"
@@ -106,17 +127,17 @@ const Login = () => {
                 type="submit"
                 className="relative text-[#03e9f4] uppercase tracking-[4px]
                 text-[16px] border-2 border-[#03e9f4] px-[22px] py-[7px] hover:text-white
-                hover:bg-[#03e9f4] custom-shadow custom-text rounded hover:-translate-y-1"
+                hover:bg-[#03e9f4] custom-shadow custom-text rounded-lg hover:-translate-y-2"
               >
-                Login
+                Sign up
               </button>
               <div className="flex justify-center gap-5 text-gray-500 mt-3">
-                Not have an account?
+                Already have an account?
                 <Link
-                  to={"/signup"}
-                  className="text-sm text-[#03e9f4] custom-text hover:scale-125 "
+                  to={"/login"}
+                  className="text-sm text-[#03e9f4] custom-text hover:scale-125"
                 >
-                  Sign up
+                  Login
                 </Link>
               </div>
             </form>
